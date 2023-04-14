@@ -12,14 +12,14 @@ let regions = [
 function Header() {
   const [page, setPage] = useState(0);
   const dispatch = useDispatch();
-  const regionsList = useSelector((state) => state.regions.regionList).slice(
-    0,
-    page + 2
-  );
-  const selectedRegion = useSelector((state) => state.regions.selectedRegion);
   const getRegions = (region, name) => {
     dispatch(getRegionsList({ region, name }));
   };
+  let regionsList = useSelector((state) => state.regions.regionList);
+  if (regionsList.length) {
+    regionsList = regionsList.slice(0, page + 2);
+  }
+  const selectedRegion = useSelector((state) => state.regions.selectedRegion);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -55,6 +55,10 @@ function Header() {
           </li>
         ))}
       </ul>
+      <div className="text-center m-5">
+        {regionsList.status === 404 &&
+          regionsList.message + " по запросу: " + selectedRegion}
+      </div>
       {regionsList.length > 0 && (
         <p>Страны, по выбранному региону: {selectedRegion}</p>
       )}
@@ -62,10 +66,6 @@ function Header() {
       <div className="text-center m-5">
         {" "}
         {regionsList.length > 0 && <Country list={regionsList} />}
-        <div>
-          {regionsList.status === 404 &&
-            regionsList.message + " по запросу: " + selectedRegion}
-        </div>
       </div>
     </>
   );
