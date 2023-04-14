@@ -4,12 +4,12 @@ import { getByCode } from "../reducers/actions";
 import { useSelector, useDispatch } from "react-redux";
 import Country from "./Country";
 function CodeCountry() {
+  const dispatch = useDispatch();
   const { code } = useParams();
   useEffect(() => {
     dispatch(getByCode(code));
-  }, [code]);
+  }, [code, dispatch]);
 
-  const dispatch = useDispatch();
   const country = useSelector((state) => state.regions.byCode);
 
   return (
@@ -17,7 +17,7 @@ function CodeCountry() {
       <Link className="btn btn-success back-btn" to="/">
         Back{" "}
       </Link>
-      {country.length > 0 && <Country list={country} statusText="AAD" />}
+      {country.length > 0 && <Country list={country} />}
     </div>
   );
 }

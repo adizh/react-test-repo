@@ -25,13 +25,12 @@ function EachCountry() {
                 .map((e) => e)
                 .join(" ")}
             </p>
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className="borders" style={{ display: "flex", gap: "10px" }}>
               Границы:{" "}
-              {state?.borders
-                ? state.borders.map((border) => (
-                    <Link to={`/${border}`}>{border}</Link>
-                  ))
-                : "Отсутсвует"}
+              {state?.borders?.map((border) => (
+                <Link to={`/${border}`}>{border}</Link>
+              ))}
+              {!state.borders && "Отсутствует"}
             </div>
           </div>
           <div className="left-side">
